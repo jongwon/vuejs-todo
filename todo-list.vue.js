@@ -1,4 +1,13 @@
-var TodoListVue = Vue.extend({
+var TodoList = Vue.extend({
+
+	props:{
+		todoList:{
+			type:Array,
+			default:function(){
+				return [];
+			}
+		}
+	},
 
 	template:`
 	<div>
@@ -15,22 +24,18 @@ var TodoListVue = Vue.extend({
 				</li>
 			</ol>
 		</div>
-		<div class="todo-form">
-			<input v-model="todo.title" 
-			@keyup.enter.stop.prevent="addTodo()">
-			<button @click="addTodo()"> 만들기 </button>
-		</div>
 	</div>
 	`,
 
 	data:function(){
-		return {
-			appname:'jongwon'
-		}
+		return {};
 	},
 
 	mounted:function(){
+		
 		var self = this;
+		this.$root.bus.$on('create-done', this.addTodo);
+
 		$.ajax({
 			url:self.$root.ctx+'/test.json',
 			dataType:'json'
@@ -40,6 +45,10 @@ var TodoListVue = Vue.extend({
 		})
 	},
 
+	beforeDestroy:function(){
+		this.$root.bus.$off('create-done', this.addTodo);
+	},
+
 	methods:{
 
 		deleteTodo:function(index){
@@ -47,28 +56,13 @@ var TodoListVue = Vue.extend({
 		},
 
 		editTodo:function(index){
-			this.todo = this.todoList[index];
-			// this.editIndex = index;
+			this.$root.bus.$emit('edit-todo', 
+				this.todoList[index], index);
 		},
 
-		addTodo:function(){
+		addTodo:function(todo){
 			console.log('addTodo called')
-
-			var index = this.todoList.indexOf(this.todo);
-			if(index>-1){
-
-				this.todo = {
-					title:'',
-					state:'new'
-				};
-
-			}else{
-				this.todoList.push(this.todo);
-				this.todo = {
-					title:'',
-					state:'new'
-				};
-			}
+			this.todoList.push(todo);
 		},
 
 		changeState:function(index){
@@ -84,4 +78,6 @@ var TodoListVue = Vue.extend({
 	}
 
 });
+
+Vue.component('todo-list', TodoList);
 

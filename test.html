@@ -9,35 +9,31 @@
 
 	<h4> VueJS 를 이용해 TODO 만들기 </h4>
 
-	<div id="app"></div>
+	<div id="app">
+		<todo-list></todo-list>
+		<todo-editor></todo-editor>
+	</div>
 
 	<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
 	<script type="text/javascript" src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
 
-	<script type="text/javascript" src="todo.vue.js"></script>
+	<script type="text/javascript" src="todo-list.vue.js"></script>
+	<script type="text/javascript" src="todo-edit.vue.js"></script>
 
 	<script type="text/javascript">
 		
 
-	var vm = new TodoListVue({
+	var vm = new Vue({
 		
 		el:'#app',
 
 		data:{
-			ctx:'/vuejs-todo',
-			todoList:[],
-			todo:{
-				title:'',
-				state:'new'
-			},
-			// editIndex:-1
+			ctx:'/vuejs-todo2',
+			bus:new Vue()
 		},
-		
 
 		methods:{
-			test:function(){
 
-			}
 		}
 
 	});
