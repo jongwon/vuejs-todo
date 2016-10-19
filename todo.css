@@ -1,0 +1,25 @@
+.todo-list {
+	background-color:#ddd;
+	padding:1em;
+}
+
+.todo-form {
+	margin:1em;
+	padding:2em;
+	border:1px solid black;
+	border-radius:1em;
+}
+
+.todo {
+	padding:0.3em;
+}
+.todo.new {
+	color:black;
+}
+.todo.ing {
+	color:red;
+}
+.todo.end {
+	color:green;
+	text-decoration: line-through;
+}
