@@ -3,12 +3,73 @@
 <head>
 	<meta charset="utf-8">
 	<title> vuejs-todo example </title>
+	<style type="text/css">
+		
+	.todo-list {
+		background-color:#ddd;
+		padding:1em;
+	}
+
+	.todo-form {
+		margin:1em;
+		padding:2em;
+		border:1px solid black;
+		border-radius:1em;
+	}
+
+	.todo {
+		padding:0.3em;
+	}
+	.todo.new {
+		color:black;
+	}
+	.todo.ing {
+		color:red;
+	}
+	.todo.end {
+		color:green;
+		text-decoration: line-through;
+	}
+
+	</style>
 </head>
 <body>
 
 	<h4> VueJS 를 이용해 TODO 만들기 </h4>
 
-	<div>test1</div>
+	<div id="app"></div>
 
+	<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://unpkg.com/vue@2.0.3/dist/vue.js"></script>
+
+	<script type="text/javascript" src="todo.vue.js"></script>
+
+	<script type="text/javascript">
+		
+
+	var vm = new TodoListVue({
+		
+		el:'#app',
+
+		data:{
+			ctx:'/vuejs-todo',
+			todoList:[],
+			todo:{
+				title:'',
+				state:'new'
+			},
+			// editIndex:-1
+		},
+		
+
+		methods:{
+			test:function(){
+
+			}
+		}
+
+	});
+
+	</script>
 </body>
 </html>
