@@ -19,7 +19,7 @@ var TodoEditor = Vue.extend({
 
 	template:`
 	<div class="todo-form">
-		<input v-model="todo.title" 
+		<input class="todo-title" v-model="todo.title" 
 		@keyup.enter.stop.prevent="addTodo()">
 		<button @click="addTodo()"> 만들기 </button>
 	</div>
@@ -37,6 +37,11 @@ var TodoEditor = Vue.extend({
 
 		newTodo:function(){
 			// ???
+			this.editIndex = -1;
+			this.todo = {
+				title:'',
+				state:'new'
+			};
 		},
 
 		editTodo:function(todo, index){
@@ -45,17 +50,14 @@ var TodoEditor = Vue.extend({
 		},
 
 		addTodo:function(){
-			if(this.editIndex >-1){
-				
-			}else{
+			var self = this;
+			if(this.editIndex < 0){
 				this.$root.bus.$emit('create-done', this.todo);
-
 			}
-			this.editIndex = -1;
-			this.todo = {
-				title:'',
-				state:'new'
-			}
+			this.$nextTick(function(){
+				self.newTodo();
+			});
+			
 		}
 	}
 

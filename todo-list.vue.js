@@ -35,18 +35,22 @@ var TodoList = Vue.extend({
 		
 		var self = this;
 		this.$root.bus.$on('create-done', this.addTodo);
+		this.$root.bus.$on('add-todo-list', this.addTodoList);
 
 		$.ajax({
 			url:self.$root.ctx+'/test.json',
 			dataType:'json'
 		}).done(function(list){
 			console.log(list);
-			self.todoList = list;
+			self.$root.bus.$emit('add-todo-list', list);
+			// Vue.set(self, 'todoList', list);
+			// self.todoList = list;
 		})
 	},
 
 	beforeDestroy:function(){
 		this.$root.bus.$off('create-done', this.addTodo);
+		this.$root.bus.$off('add-todo-list', this.addTodoList);
 	},
 
 	methods:{
@@ -63,6 +67,11 @@ var TodoList = Vue.extend({
 		addTodo:function(todo){
 			console.log('addTodo called')
 			this.todoList.push(todo);
+		},
+
+		addTodoList:function(arr){
+			var self = this;
+			arr.forEach(function(a){self.todoList.push(a)});
 		},
 
 		changeState:function(index){
